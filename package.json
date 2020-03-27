@@ -6,7 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "mocha --reporter spec",
-    "build": "tsc"
+    "build": "tsc",
+    "cover": "istanbul cover node_modules/mocha/bin/_mocha test/*.js - - -R spec"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,8 @@
   "devDependencies": {
     "@types/node": "^12.12.31",
     "chai": "^4.2.0",
+    "coveralls": "^3.0.11",
+    "istanbul": "^0.4.5",
     "mocha": "^7.1.1",
     "typescript": "^3.8.3"
   }
