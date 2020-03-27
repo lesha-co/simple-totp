@@ -5,6 +5,8 @@ export const base32decode = (b32string: string): Buffer | null => {
   if (b32string.length % 8) return null;
 
   const codepoints = Array.from(b32string).map(x => alphabet.indexOf(x));
+  if (codepoints.some(x => x === -1)) return null;
+
   const buf = Buffer.alloc((b32string.length * 5) / 8);
 
   codepoints.forEach((code, index, array) => {

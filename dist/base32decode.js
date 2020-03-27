@@ -6,6 +6,8 @@ exports.base32decode = function (b32string) {
     if (b32string.length % 8)
         return null;
     var codepoints = Array.from(b32string).map(function (x) { return alphabet.indexOf(x); });
+    if (codepoints.some(function (x) { return x === -1; }))
+        return null;
     var buf = Buffer.alloc((b32string.length * 5) / 8);
     codepoints.forEach(function (code, index, array) {
         // 000000001111111122222222  bytes
