@@ -1,5 +1,5 @@
-import { base32decode } from "./base32decode";
-import { hmacResultToCode, getCounter } from "./util";
+import { base32decode } from "../lib/base32decode";
+import { hmacResultToCode, getCounter } from "../lib/util";
 
 {
   const b = base32decode("JBSWY3DP");

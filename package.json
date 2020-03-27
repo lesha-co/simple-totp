@@ -1,0 +1,21 @@
+{
+  "name": "easy-totp",
+  "version": "1.0.0",
+  "description": "Create TOTP codes",
+  "main": "",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^12.12.31"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "totp"
+  ],
+  "author": "a.kuzmichev",
+  "license": "ISC"
+}
