@@ -1,9 +1,9 @@
 {
   "name": "easy-totp",
   "version": "1.0.0",
-  "description": "",
-  "main": "dist/lib/index.js",
-  "types": "dist/lib/index.d.ts",
+  "description": "A module which lets you generate TOTP codes with zero dependencies",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "mocha --reporter spec",
     "build": "tsc"
