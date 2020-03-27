@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for dist/index.js</title>
+    <title>Code coverage report for dist/getTOTP.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -16,28 +16,28 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../index.html">all files</a> / <a href="index.html">dist/</a> index.js
+      <a href="../index.html">all files</a> / <a href="index.html">dist/</a> getTOTP.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>13/13</span>
+        <span class='fraction'>19/19</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">62.5% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>5/8</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>1/1</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>13/13</span>
+        <span class='fraction'>15/15</span>
       </div>
     </div>
   </div>
@@ -57,35 +57,44 @@
 12
 13
 14
-15</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+15
+16
+17
+18</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var getKey_1 = require("./getKey");
-exports.getKey = getKey_1.getKey;
-var base32decode_1 = require("./base32decode");
-exports.base32decode = base32decode_1.base32decode;
 var getCode_1 = require("./getCode");
-exports.getCode = getCode_1.getCode;
 var getCounter_1 = require("./getCounter");
-exports.getCounter = getCounter_1.getCounter;
 var getHMAC_1 = require("./getHMAC");
-exports.getHMAC = getHMAC_1.getHMAC;
-var getTOTP_1 = require("./getTOTP");
-exports.getTOTP = getTOTP_1.getTOTP;
-//# sourceMappingURL=index.js.map</pre></td></tr>
+var getKey_1 = require("./getKey");
+exports.getTOTP = function (seed, encoding, timestamp, nDigits, T0, Tx) {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (timestamp === void 0) { timestamp = Date.now(); }
+    if (nDigits === void 0) { nDigits = 6; }
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (T0 === void 0) { T0 = 0; }
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (Tx === void 0) { Tx = 30000; }
+    var secret = getKey_1.getKey(seed, encoding);
+    var _a = getCounter_1.getCounter(timestamp, T0, Tx), counterBuffer = _a.counterBuffer, remainingSeconds = _a.remainingSeconds;
+    var hmac = getHMAC_1.getHMAC(secret, counterBuffer);
+    var totp = getCode_1.getCode(hmac, nDigits);
+    return { totp: totp, remainingSeconds: remainingSeconds };
+};
+//# sourceMappingURL=getTOTP.js.map</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->

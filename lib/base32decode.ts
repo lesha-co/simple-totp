@@ -1,11 +1,13 @@
 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 const padding = "=";
 
-export const base32decode = (b32string: string): Buffer | null => {
-  if (b32string.length % 8) return null;
+export const base32decode = (b32string: string): Buffer => {
+  if (b32string.length % 8)
+    throw new Error("input should have length of multiple of 8");
 
   const codepoints = Array.from(b32string).map(x => alphabet.indexOf(x));
-  if (codepoints.some(x => x === -1)) return null;
+  if (codepoints.some(x => x === -1))
+    throw new Error("Illegal characters found in input");
 
   const buf = Buffer.alloc((b32string.length * 5) / 8);
 

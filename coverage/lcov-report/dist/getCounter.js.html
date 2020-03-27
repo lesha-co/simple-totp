@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for dist/index.js</title>
+    <title>Code coverage report for dist/getCounter.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -16,13 +16,13 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../index.html">all files</a> / <a href="index.html">dist/</a> index.js
+      <a href="../index.html">all files</a> / <a href="index.html">dist/</a> getCounter.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>13/13</span>
+        <span class='fraction'>8/8</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>1/1</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>13/13</span>
+        <span class='fraction'>8/8</span>
       </div>
     </div>
   </div>
@@ -55,37 +55,31 @@
 10
 11
 12
-13
-14
-15</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+13</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var getKey_1 = require("./getKey");
-exports.getKey = getKey_1.getKey;
-var base32decode_1 = require("./base32decode");
-exports.base32decode = base32decode_1.base32decode;
-var getCode_1 = require("./getCode");
-exports.getCode = getCode_1.getCode;
-var getCounter_1 = require("./getCounter");
-exports.getCounter = getCounter_1.getCounter;
-var getHMAC_1 = require("./getHMAC");
-exports.getHMAC = getHMAC_1.getHMAC;
-var getTOTP_1 = require("./getTOTP");
-exports.getTOTP = getTOTP_1.getTOTP;
-//# sourceMappingURL=index.js.map</pre></td></tr>
+exports.getCounter = function (timestamp, T0, Tx) {
+    var adjustedTimestamp = timestamp - T0;
+    var remainingSeconds = Tx - (adjustedTimestamp % Tx);
+    var counter = Math.floor(adjustedTimestamp / Tx);
+    var counterBuffer = Buffer.alloc(8, 0);
+    // TODO: use writeBigInt64BE(counter, 0) (requires node v12.something)
+    // This can wait until 2038 when 64bit time stamps become necessity
+    counterBuffer.writeUInt32BE(counter, 4);
+    return { counterBuffer: counterBuffer, remainingSeconds: remainingSeconds };
+};
+//# sourceMappingURL=getCounter.js.map</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
