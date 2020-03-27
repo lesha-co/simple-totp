@@ -1,5 +1,5 @@
 {
-  "name": "easy-totp",
+  "name": "simple-totp",
   "version": "1.0.0",
   "description": "A module which lets you generate TOTP codes with zero dependencies",
   "main": "dist/index.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lesha-co/easy-totp.git"
+    "url": "git+https://github.com/lesha-co/simple-totp.git"
   },
   "keywords": [
     "totp"
@@ -18,9 +18,9 @@
   "author": "Aleksei Kuzmichev <lesha@lesha.co> (https://lesha.co/)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/lesha-co/easy-totp/issues"
+    "url": "https://github.com/lesha-co/simple-totp/issues"
   },
-  "homepage": "https://github.com/lesha-co/easy-totp#readme",
+  "homepage": "https://github.com/lesha-co/simple-totp#readme",
   "dependencies": {},
   "devDependencies": {
     "@types/node": "^12.12.31",
