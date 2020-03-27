@@ -1,6 +1,6 @@
-const { base32decode } = require("../dist/lib/base32decode");
-var expect = require("chai").expect;
-const { hmacResultToCode, getCounter } = require("../dist/lib/util");
+const { base32decode } = require("../dist/base32decode");
+const { hmacResultToCode, getCounter } = require("../dist/util");
+const expect = require("chai").expect;
 
 describe("EasyTOTP", () => {
   it("should correctly decode Base32 seed", () => {
