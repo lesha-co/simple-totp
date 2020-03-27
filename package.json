@@ -1,21 +1,31 @@
 {
   "name": "easy-totp",
   "version": "1.0.0",
-  "description": "Create TOTP codes",
-  "main": "",
-  "directories": {
-    "lib": "lib"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "@types/node": "^12.12.31"
-  },
+  "description": "",
+  "main": "dist/lib/index.js",
+  "types": "dist/lib/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --reporter spec",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lesha-co/easy-totp.git"
   },
   "keywords": [
     "totp"
   ],
-  "author": "a.kuzmichev",
-  "license": "ISC"
+  "author": "Aleksei Kuzmichev <lesha@lesha.co> (https://lesha.co/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lesha-co/easy-totp/issues"
+  },
+  "homepage": "https://github.com/lesha-co/easy-totp#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^12.12.31",
+    "chai": "^4.2.0",
+    "mocha": "^7.1.1",
+    "typescript": "^3.8.3"
+  }
 }
