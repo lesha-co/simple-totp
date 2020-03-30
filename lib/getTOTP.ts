@@ -5,7 +5,7 @@ import { getKey } from "./getKey";
 
 export const getTOTP = (
   seed: string | Buffer,
-  encoding: "base32",
+  encoding: BufferEncoding | "base32",
   timestamp: number = Date.now(),
   nDigits = 6,
   T0 = 0,
