@@ -38,11 +38,7 @@ describe("EasyTOTP", () => {
   describe("getCounter", () => {
     it("should generate correct counter message from timestamp", () => {
       const timestamp = 1585296123456;
-      const { counterBuffer, remainingSeconds } = getCounter(
-        timestamp,
-        0,
-        30000
-      );
+      const { counterBuffer, remainingMs } = getCounter(timestamp, 0, 30000);
       expect(counterBuffer.toString("hex")).to.equal("00000000032652c4");
     });
   });

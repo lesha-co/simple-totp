@@ -10,9 +10,9 @@ exports.getTOTP = function (seed, encoding, timestamp, nDigits, T0, Tx) {
     if (T0 === void 0) { T0 = 0; }
     if (Tx === void 0) { Tx = 30000; }
     var secret = getKey_1.getKey(seed, encoding);
-    var _a = getCounter_1.getCounter(timestamp, T0, Tx), counterBuffer = _a.counterBuffer, remainingSeconds = _a.remainingSeconds;
+    var _a = getCounter_1.getCounter(timestamp, T0, Tx), counterBuffer = _a.counterBuffer, remainingMs = _a.remainingMs;
     var hmac = getHMAC_1.getHMAC(secret, counterBuffer);
     var totp = getCode_1.getCode(hmac, nDigits);
-    return { totp: totp, remainingSeconds: remainingSeconds };
+    return { totp: totp, remainingMs: remainingMs };
 };
 //# sourceMappingURL=getTOTP.js.map
