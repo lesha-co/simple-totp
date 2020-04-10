@@ -10,10 +10,10 @@ export const getTOTP = (
   nDigits = 6,
   T0 = 0,
   Tx = 30000
-): { totp: string; remainingSeconds: number } => {
+): { totp: string; remainingMs: number } => {
   const secret = getKey(seed, encoding);
-  const { counterBuffer, remainingSeconds } = getCounter(timestamp, T0, Tx);
+  const { counterBuffer, remainingMs } = getCounter(timestamp, T0, Tx);
   const hmac = getHMAC(secret, counterBuffer);
   const totp = getCode(hmac, nDigits);
-  return { totp, remainingSeconds };
+  return { totp, remainingMs };
 };

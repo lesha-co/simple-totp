@@ -3,7 +3,7 @@ const {
   getCode,
   getCounter,
   getTOTP,
-  getKey
+  getKey,
 } = require("../dist");
 
 const expect = require("chai").expect;
