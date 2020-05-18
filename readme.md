@@ -3,7 +3,7 @@
 
 # Simple TOTP
 
-```
+```js
 import totp from "../lib";
 
 const secret = process.env.SECRET as string;
