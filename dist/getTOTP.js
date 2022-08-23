@@ -1,18 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var getCode_1 = require("./getCode");
-var getCounter_1 = require("./getCounter");
-var getHMAC_1 = require("./getHMAC");
-var getKey_1 = require("./getKey");
-exports.getTOTP = function (seed, encoding, timestamp, nDigits, T0, Tx) {
-    if (timestamp === void 0) { timestamp = Date.now(); }
-    if (nDigits === void 0) { nDigits = 6; }
-    if (T0 === void 0) { T0 = 0; }
-    if (Tx === void 0) { Tx = 30000; }
-    var secret = getKey_1.getKey(seed, encoding);
-    var _a = getCounter_1.getCounter(timestamp, T0, Tx), counterBuffer = _a.counterBuffer, remainingMs = _a.remainingMs;
-    var hmac = getHMAC_1.getHMAC(secret, counterBuffer);
-    var totp = getCode_1.getCode(hmac, nDigits);
-    return { totp: totp, remainingMs: remainingMs };
+const getCode_1 = require("./getCode");
+const getCounter_1 = require("./getCounter");
+const getHMAC_1 = require("./getHMAC");
+const getKey_1 = require("./getKey");
+exports.getTOTP = (seed, encoding, timestamp = Date.now(), nDigits = 6, T0 = 0, Tx = 30000) => {
+    const secret = getKey_1.getKey(seed, encoding);
+    const { counterBuffer, remainingMs } = getCounter_1.getCounter(timestamp, T0, Tx);
+    const hmac = getHMAC_1.getHMAC(secret, counterBuffer);
+    const totp = getCode_1.getCode(hmac, nDigits);
+    return { totp, remainingMs };
 };
 //# sourceMappingURL=getTOTP.js.map

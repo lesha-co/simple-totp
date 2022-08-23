@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "mocha --reporter spec",
+    "test": "npm run build && mocha --reporter spec",
     "build": "npm run clean && tsc",
     "clean": "rm -r ./dist",
     "cover": "istanbul cover node_modules/mocha/bin/_mocha test/*.js - - -R spec"

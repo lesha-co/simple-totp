@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var base32decode_1 = require("./base32decode");
-exports.getKey = function (input, encoding) {
+const base32decode_1 = require("./base32decode");
+exports.getKey = (input, encoding) => {
     if (Buffer.isBuffer(input))
         return input;
     if (encoding === undefined) {

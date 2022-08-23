@@ -22,22 +22,22 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>25/25</span>
+        <span class='fraction'>57/57</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>6/6</span>
+        <span class='fraction'>8/8</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>4/4</span>
+        <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>23/23</span>
+        <span class='fraction'>55/55</span>
       </div>
     </div>
   </div>
@@ -84,7 +84,46 @@
 39
 40
 41
-42</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -125,46 +164,124 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">26×</span>
+<span class="cline-any cline-yes">26×</span>
+<span class="cline-any cline-yes">26×</span>
+<span class="cline-any cline-yes">26×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
-var padding = "=";
-exports.base32decode = function (b32string) {
+const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+const padding = "=";
+exports.base32decode = (b32string) =&gt; {
     if (b32string.length % 8)
         throw new Error("input should have length of multiple of 8");
-    var codepoints = Array.from(b32string).map(function (x) { return alphabet.indexOf(x); });
-    if (codepoints.some(function (x) { return x === -1; }))
+    const codepoints = Array.from(b32string).map((x) =&gt; alphabet.indexOf(x));
+    if (codepoints.some((x) =&gt; x === -1))
         throw new Error("Illegal characters found in input");
-    var buf = Buffer.alloc((b32string.length * 5) / 8);
-    codepoints.forEach(function (code, index, array) {
+    const buf = Buffer.alloc((b32string.length * 5) / 8);
+    codepoints.forEach((code, index, array) =&gt; {
         // 000000001111111122222222  bytes
         // **********OOOOO*********  third character will have these bits to it
         // ---------&gt;                bitOffset = 2x5= 10
         //         -&gt;                offsetInByte = 10%8= 2
         //          &lt;---------------&gt; u16
         //                 &lt;-------- shiftInU16 = 9
-        var bitOffset = index * 5;
+        const bitOffset = index * 5;
         // we need to know which byte corresponds to given bit offset
-        var startingByte = Math.floor(bitOffset / 8);
+        const startingByte = Math.floor(bitOffset / 8);
         // we need to know how far we are into this byte
-        var offsetInByte = bitOffset % 8;
+        const offsetInByte = bitOffset % 8;
         // we will work with u16 because our 5 bits can cross byte border and it's easier to just
         // assume that we're working with u16s
-        var shiftInU16 = 16 - 5 - offsetInByte;
+        const shiftInU16 = 16 - 5 - offsetInByte;
         if (index === array.length - 1) {
             // in case of last character startingByte would be the last one and we can't read u16
             // anymore, in that case we will work with u8
-            var u8 = buf.readUInt8(startingByte);
-            var newU8 = u8 | code;
+            const u8 = buf.readUInt8(startingByte);
+            const newU8 = u8 | code;
             buf.writeUInt8(newU8, startingByte);
         }
         else {
-            var u16 = buf.readUInt16BE(startingByte);
-            var newU16 = u16 | (code &lt;&lt; shiftInU16);
+            const u16 = buf.readUInt16BE(startingByte);
+            const newU16 = u16 | (code &lt;&lt; shiftInU16);
             buf.writeUInt16BE(newU16, startingByte);
         }
     });
     return buf;
+};
+exports.buf_to_base32 = (buf) =&gt; {
+    let _buf = buf.slice();
+    let current = 0;
+    let currentBitLength = 0;
+    let base32 = "";
+    const CONSUME = 8;
+    const FLUSH = 5;
+    const consumeFromSource = () =&gt; {
+        current = (current &lt;&lt; CONSUME) | _buf[0];
+        currentBitLength += CONSUME;
+        _buf = _buf.slice(1);
+    };
+    const flush = () =&gt; {
+        const leading5bits = current &gt;&gt; (currentBitLength - FLUSH);
+        current -= leading5bits &lt;&lt; (currentBitLength - FLUSH);
+        currentBitLength -= FLUSH;
+        base32 += alphabet[leading5bits];
+    };
+    const align = () =&gt; {
+        current = current &lt;&lt; (FLUSH - currentBitLength);
+        currentBitLength = FLUSH;
+    };
+    const pad = () =&gt; {
+        const length = Math.ceil(base32.length / 8) * 8;
+        base32 = base32.padEnd(length, padding);
+    };
+    while (_buf.length) {
+        while (currentBitLength &lt; 5)
+            consumeFromSource();
+        while (currentBitLength &gt;= 5)
+            flush();
+    }
+    if (current) {
+        align();
+        flush();
+        pad();
+    }
+    return base32;
 };
 //# sourceMappingURL=base32decode.js.map</pre></td></tr>
 </table></pre>
@@ -172,7 +289,7 @@ exports.base32decode = function (b32string) {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Apr 10 2020 16:29:34 GMT+0300 (Moscow Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 23 2022 23:59:49 GMT+0300 (Moscow Standard Time)
 </div>
 </div>
 <script src="../prettify.js"></script>

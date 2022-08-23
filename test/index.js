@@ -4,6 +4,7 @@ const {
   getCounter,
   getTOTP,
   getKey,
+  buf_to_base32,
 } = require("../dist");
 
 const expect = require("chai").expect;
@@ -21,6 +22,19 @@ describe("EasyTOTP", () => {
       it("if input has characters outside alphabet", () => {
         expect(() => base32decode("JBSWY3!P")).to.throw();
       });
+    });
+  });
+
+  describe("Base32 encoder", () => {
+    it("should correctly encode Base32", () => {
+      const buffer = Buffer.from("Hello", "ascii");
+      const b = buf_to_base32(buffer);
+      expect(b).to.equal("JBSWY3DP");
+    });
+    it("should correctly encode Base32 with paddings", () => {
+      const buffer = Buffer.from("Hello World", "ascii");
+      const b = buf_to_base32(buffer);
+      expect(b).to.equal("JBSWY3DPEBLW64TMMQ======");
     });
   });
 

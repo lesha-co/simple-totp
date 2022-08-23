@@ -5,8 +5,8 @@ export const base32decode = (b32string: string): Buffer => {
   if (b32string.length % 8)
     throw new Error("input should have length of multiple of 8");
 
-  const codepoints = Array.from(b32string).map(x => alphabet.indexOf(x));
-  if (codepoints.some(x => x === -1))
+  const codepoints = Array.from(b32string).map((x) => alphabet.indexOf(x));
+  if (codepoints.some((x) => x === -1))
     throw new Error("Illegal characters found in input");
 
   const buf = Buffer.alloc((b32string.length * 5) / 8);
@@ -40,4 +40,45 @@ export const base32decode = (b32string: string): Buffer => {
     }
   });
   return buf;
+};
+
+export const buf_to_base32 = (buf: Buffer): string => {
+  let _buf = buf.slice();
+  let current: number = 0;
+  let currentBitLength: number = 0;
+  let base32 = "";
+
+  const CONSUME = 8;
+  const FLUSH = 5;
+
+  const consumeFromSource = () => {
+    current = (current << CONSUME) | _buf[0];
+    currentBitLength += CONSUME;
+    _buf = _buf.slice(1);
+  };
+  const flush = () => {
+    const leading5bits = current >> (currentBitLength - FLUSH);
+    current -= leading5bits << (currentBitLength - FLUSH);
+    currentBitLength -= FLUSH;
+    base32 += alphabet[leading5bits];
+  };
+  const align = () => {
+    current = current << (FLUSH - currentBitLength);
+    currentBitLength = FLUSH;
+  };
+  const pad = () => {
+    const length = Math.ceil(base32.length / 8) * 8;
+    base32 = base32.padEnd(length, padding);
+  };
+
+  while (_buf.length) {
+    while (currentBitLength < 5) consumeFromSource();
+    while (currentBitLength >= 5) flush();
+  }
+  if (current) {
+    align();
+    flush();
+    pad();
+  }
+  return base32;
 };
