@@ -75,7 +75,7 @@ export const buf_to_base32 = (buf: Buffer): string => {
     while (currentBitLength < 5) consumeFromSource();
     while (currentBitLength >= 5) flush();
   }
-  if (current) {
+  if (currentBitLength > 0) {
     align();
     flush();
     pad();
