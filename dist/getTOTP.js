@@ -12,7 +12,7 @@ const _1 = require(".");
  * @returns
  */
 exports.getTOTP = (secretKey, encoding = undefined, timestamp = Date.now(), nDigits = 6, T0 = 0, Tx = 30000) => {
-    const { counterBuffer, remainingMs } = _1.getCounter(timestamp, T0, Tx);
+    const { counterBuffer, remainingMs } = _1.getCounterBuffer(timestamp, T0, Tx);
     const totp = _1.getCode(_1.getHMAC(_1.getKey(secretKey, encoding), counterBuffer), nDigits);
     return { totp, remainingMs };
 };

@@ -1,4 +1,4 @@
-import { getCode, getCounter, getHMAC, getKey } from ".";
+import { getCode, getCounterBuffer, getHMAC, getKey } from ".";
 
 /**
  * Full implementation of HMAC-based one-time password algorighm
@@ -18,7 +18,7 @@ export const getTOTP = (
   T0: number = 0,
   Tx: number = 30000
 ): { totp: string; remainingMs: number } => {
-  const { counterBuffer, remainingMs } = getCounter(timestamp, T0, Tx);
+  const { counterBuffer, remainingMs } = getCounterBuffer(timestamp, T0, Tx);
   const totp = getCode(
     getHMAC(getKey(secretKey, encoding), counterBuffer),
     nDigits
