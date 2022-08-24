@@ -1,6 +1,6 @@
 {
   "name": "simple-totp",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A module which lets you generate TOTP codes with zero dependencies",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
