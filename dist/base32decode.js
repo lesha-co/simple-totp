@@ -71,7 +71,7 @@ exports.buf_to_base32 = (buf) => {
         while (currentBitLength >= 5)
             flush();
     }
-    if (current) {
+    if (currentBitLength > 0) {
         align();
         flush();
         pad();
