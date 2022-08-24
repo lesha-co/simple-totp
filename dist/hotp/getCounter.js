@@ -1,5 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Calculate a counter value
+ * @param timestamp current UNIX timestamp in milliseconds
+ * @param T0 Epoch, i.e. which timestamp is considered start of the counting
+ * (use `0` unless otherwise specified)
+ * @param Tx Duration of each period in milliseconds (usually `30000`)
+ * @returns
+ */
 exports.getCounter = (timestamp, T0, Tx) => {
     const adjustedTimestamp = timestamp - T0;
     const remainingMs = Tx - (adjustedTimestamp % Tx);

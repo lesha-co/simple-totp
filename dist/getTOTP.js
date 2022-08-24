@@ -1,14 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const getCode_1 = require("./getCode");
-const getCounter_1 = require("./getCounter");
-const getHMAC_1 = require("./getHMAC");
-const getKey_1 = require("./getKey");
-exports.getTOTP = (seed, encoding, timestamp = Date.now(), nDigits = 6, T0 = 0, Tx = 30000) => {
-    const secret = getKey_1.getKey(seed, encoding);
-    const { counterBuffer, remainingMs } = getCounter_1.getCounter(timestamp, T0, Tx);
-    const hmac = getHMAC_1.getHMAC(secret, counterBuffer);
-    const totp = getCode_1.getCode(hmac, nDigits);
+const _1 = require(".");
+/**
+ * Full implementation of HMAC-based one-time password algorighm
+ * @param secretKey secret key in form of a Buffer or a string
+ * @param timestamp
+ * @param encoding encoding of a secret key in case it's a string
+ * @param nDigits length of an OTP
+ * @param T0 Epoch of a counter
+ * @param Tx Period of a counter
+ * @returns
+ */
+exports.getTOTP = (secretKey, encoding = undefined, timestamp = Date.now(), nDigits = 6, T0 = 0, Tx = 30000) => {
+    const { counterBuffer, remainingMs } = _1.getCounter(timestamp, T0, Tx);
+    const totp = _1.getCode(_1.getHMAC(_1.getKey(secretKey, encoding), counterBuffer), nDigits);
     return { totp, remainingMs };
 };
 //# sourceMappingURL=getTOTP.js.map

@@ -1,17 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var getKey_1 = require("./getKey");
-exports.getKey = getKey_1.getKey;
-var base32decode_1 = require("./base32decode");
-exports.base32decode = base32decode_1.base32decode;
-var base32decode_2 = require("./base32decode");
-exports.buf_to_base32 = base32decode_2.buf_to_base32;
-var getCode_1 = require("./getCode");
-exports.getCode = getCode_1.getCode;
-var getCounter_1 = require("./getCounter");
-exports.getCounter = getCounter_1.getCounter;
-var getHMAC_1 = require("./getHMAC");
-exports.getHMAC = getHMAC_1.getHMAC;
+var hotp_1 = require("./hotp");
+exports.getCode = hotp_1.getCode;
+exports.getCounter = hotp_1.getCounter;
+exports.getHMAC = hotp_1.getHMAC;
+exports.getKey = hotp_1.getKey;
+var base32_1 = require("./base32");
+exports.alphabet = base32_1.alphabet;
+exports.decode = base32_1.decode;
+exports.encode = base32_1.encode;
+exports.padding = base32_1.padding;
 var getTOTP_1 = require("./getTOTP");
 exports.getTOTP = getTOTP_1.getTOTP;
 //# sourceMappingURL=index.js.map

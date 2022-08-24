@@ -1,7 +1,3 @@
-export { getKey } from "./getKey";
-export { base32decode } from "./base32decode";
-export { buf_to_base32 } from "./base32decode";
-export { getCode } from "./getCode";
-export { getCounter } from "./getCounter";
-export { getHMAC } from "./getHMAC";
+export { getCode, getCounter, getHMAC, getKey } from "./hotp";
+export { alphabet, decode, encode, padding } from "./base32";
 export { getTOTP } from "./getTOTP";

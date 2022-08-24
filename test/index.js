@@ -1,41 +1,67 @@
 const {
-  base32decode,
+  decode,
   getCode,
   getCounter,
   getTOTP,
   getKey,
-  buf_to_base32,
+  encode,
+  padding,
 } = require("../dist");
-
+const { pairs } = require("./samples");
 const expect = require("chai").expect;
 
-describe("EasyTOTP", () => {
+describe("Simple TOTP", () => {
   describe("Base32 decoder", () => {
+    describe("valid inputs", () => {
+      const paddings = pairs.filter((x) => x[1].includes(padding));
+      const nopaddings = pairs.filter((x) => !x[1].includes(padding));
+
+      describe("without paddings", () => {
+        for (const [ascii, base32] of nopaddings) {
+          it(`should correctly decode from Base32 '${base32}'`, () => {
+            const b = decode(base32).toString("ascii");
+            expect(b).to.equal(ascii);
+          });
+        }
+      });
+      describe("with paddings", () => {
+        for (const [ascii, base32] of paddings) {
+          it(`should correctly decode from Base32 '${base32}'`, () => {
+            const b = decode(base32).toString("ascii");
+            expect(b).to.equal(ascii);
+          });
+        }
+      });
+    });
+
+    describe("invalid inputs", () => {});
+
     it("should correctly decode Base32 seed", () => {
-      const b = base32decode("JBSWY3DP").toString("ascii");
+      const b = decode("JBSWY3DP").toString("ascii");
       expect(b).to.equal("Hello");
+    });
+    it("should correctly decode Base32 seed with paddings", () => {
+      const b = decode("JBSWY3DPEBLW64TMMQ======").toString("ascii");
+      expect(b).to.equal("Hello World");
     });
     describe("invalid input - should return null", () => {
       it("if input length is not multiple of 8", () => {
-        expect(() => base32decode("123456789")).to.throw();
+        expect(() => decode("123456789")).to.throw();
       });
       it("if input has characters outside alphabet", () => {
-        expect(() => base32decode("JBSWY3!P")).to.throw();
+        expect(() => decode("JBSWY3!P")).to.throw();
       });
     });
   });
 
   describe("Base32 encoder", () => {
-    it("should correctly encode Base32", () => {
-      const buffer = Buffer.from("Hello", "ascii");
-      const b = buf_to_base32(buffer);
-      expect(b).to.equal("JBSWY3DP");
-    });
-    it("should correctly encode Base32 with paddings", () => {
-      const buffer = Buffer.from("Hello World", "ascii");
-      const b = buf_to_base32(buffer);
-      expect(b).to.equal("JBSWY3DPEBLW64TMMQ======");
-    });
+    for (const [ascii, base32] of pairs) {
+      it(`should correctly encode Base32 from ascii '${ascii}'`, () => {
+        const buffer = Buffer.from(ascii, "ascii");
+        const b = encode(buffer);
+        expect(b).to.equal(base32);
+      });
+    }
   });
 
   describe("getCode", () => {
