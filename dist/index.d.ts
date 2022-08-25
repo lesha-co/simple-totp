@@ -1,3 +1,4 @@
-export { getCode, getCounterBuffer, getHMAC, getKey, getCounter } from "./hotp";
-export { alphabet, decode, encode, padding } from "./base32";
+export { getCode, getCounterValue, getHMAC, getKey, getCounter } from "./hotp";
+export { BASE32_ALPHABET, BASE32_PADDING } from "./converters/alphabet";
+export { convert, to_u8a, from_u8a } from "./converters";
 export { getTOTP } from "./getTOTP";

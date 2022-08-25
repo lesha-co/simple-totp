@@ -1,8 +1,9 @@
-import { getCode, getCounterBuffer, getHMAC, getKey } from ".";
+import { getCode, getCounterValue, getHMAC, getKey } from ".";
+import { SupportedEncodings } from "./hotp/getKey";
 
 /**
  * Full implementation of HMAC-based one-time password algorighm
- * @param secretKey secret key in form of a Buffer or a string
+ * @param secretKey secret key in form of a Uint8Array or a string
  * @param timestamp
  * @param encoding encoding of a secret key in case it's a string
  * @param nDigits length of an OTP
@@ -11,16 +12,16 @@ import { getCode, getCounterBuffer, getHMAC, getKey } from ".";
  * @returns
  */
 export const getTOTP = (
-  secretKey: string | Buffer,
-  encoding: BufferEncoding | "base32" | undefined = undefined,
+  secretKey: string | Uint8Array,
+  encoding: SupportedEncodings | undefined = undefined,
   timestamp: number = Date.now(),
   nDigits: number = 6,
   T0: number = 0,
   Tx: number = 30000
 ): { totp: string; remainingMs: number } => {
-  const { counterBuffer, remainingMs } = getCounterBuffer(timestamp, T0, Tx);
+  const { counterValue, remainingMs } = getCounterValue(timestamp, T0, Tx);
   const totp = getCode(
-    getHMAC(getKey(secretKey, encoding), counterBuffer),
+    getHMAC(getKey(secretKey, encoding), counterValue),
     nDigits
   );
   return { totp, remainingMs };

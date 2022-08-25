@@ -1,6 +1,6 @@
-import { alphabet, padding } from "./alphabet";
+import { BASE32_ALPHABET, BASE32_PADDING } from "./alphabet";
 
-export const encode = (buf: Buffer): string => {
+export const u8a_to_base32 = (buf: Uint8Array): string => {
   let _buf = buf.slice();
   let current: number = 0;
   let currentBitLength: number = 0;
@@ -18,7 +18,7 @@ export const encode = (buf: Buffer): string => {
     const leading5bits = current >> (currentBitLength - FLUSH);
     current -= leading5bits << (currentBitLength - FLUSH);
     currentBitLength -= FLUSH;
-    base32 += alphabet[leading5bits];
+    base32 += BASE32_ALPHABET[leading5bits];
   };
   const align = () => {
     current = current << (FLUSH - currentBitLength);
@@ -26,7 +26,7 @@ export const encode = (buf: Buffer): string => {
   };
   const pad = () => {
     const length = Math.ceil(base32.length / 8) * 8;
-    base32 = base32.padEnd(length, padding);
+    base32 = base32.padEnd(length, BASE32_PADDING);
   };
 
   while (_buf.length) {

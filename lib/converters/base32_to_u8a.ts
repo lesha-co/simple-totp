@@ -1,4 +1,4 @@
-import { alphabet, padding } from "./alphabet";
+import { BASE32_ALPHABET, BASE32_PADDING } from "./alphabet";
 
 const shiftNumber = (n: number, shift: number) => {
   if (shift == 0) return n;
@@ -8,7 +8,7 @@ const shiftNumber = (n: number, shift: number) => {
 };
 
 const writeBits = (
-  buf: Buffer,
+  buf: Uint8Array,
   beginAtBit: number,
   nBits: number,
   value: number
@@ -30,7 +30,7 @@ const writeBits = (
 
   if (buf.length * 8 - (beginAtBit + nBits) < 0) {
     throw new Error(
-      `Attempt to write past buffer end: Buffer length: ${
+      `Attempt to write past array end: Array length: ${
         buf.length * 8
       } bits, writing ${nBits} at ${beginAtBit}`
     );
@@ -41,33 +41,30 @@ const writeBits = (
   const offsetInStartingByte = beginAtBit % 8;
   const shift = 8 - nBits - offsetInStartingByte;
 
-  buf.writeUInt8(
-    (buf.readUInt8(startingByte) | shiftNumber(value, shift)) & 0xff,
-    startingByte
-  );
+  buf[startingByte] = (buf[startingByte] | shiftNumber(value, shift)) & 0xff;
   if (shift < 0) {
     // next byte
     const offsetInNextByte = offsetInStartingByte - 8;
     const shift = 8 - nBits - offsetInNextByte;
-    buf.writeUInt8(
-      (buf.readUInt8(startingByte + 1) | shiftNumber(value, shift)) & 0xff,
-      startingByte + 1
-    );
+    buf[startingByte + 1] =
+      (buf[startingByte + 1] | shiftNumber(value, shift)) & 0xff;
   }
 };
 
-export const decode = (b32string: string): Buffer => {
+export const base32_to_u8a = (b32string: string): Uint8Array => {
   if (b32string.length % 8)
     throw new Error("input should have length of multiple of 8");
 
-  if (b32string.includes(padding)) {
-    b32string = b32string.slice(0, b32string.indexOf(padding));
+  if (b32string.includes(BASE32_PADDING)) {
+    b32string = b32string.slice(0, b32string.indexOf(BASE32_PADDING));
   }
-  const codepoints = Array.from(b32string).map((x) => alphabet.indexOf(x));
+  const codepoints = Array.from(b32string).map((x) =>
+    BASE32_ALPHABET.indexOf(x)
+  );
   if (codepoints.some((x) => x === -1))
     throw new Error("Illegal characters found in input");
 
-  const buf = Buffer.alloc((b32string.length * 5) / 8, 0);
+  const buf = new Uint8Array((b32string.length * 5) / 8);
 
   let bitOffset = 0;
 

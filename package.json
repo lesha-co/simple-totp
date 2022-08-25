@@ -1,22 +1,26 @@
 {
   "name": "simple-totp",
   "version": "1.2.1",
-  "description": "A module which lets you generate TOTP codes with zero dependencies",
+  "description": "A module which lets you generate TOTP codes with zero dependencies. Also, encode/decode base32 values",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "npm run build && mocha --reporter spec",
+    "test": "mocha --reporter spec",
     "testwatch": "mocha --reporter spec --watch",
-    "build": "npm run clean && tsc",
+    "watch": "tsc -w",
+    "build": "tsc",
     "clean": "rm -r ./dist",
-    "cover": "istanbul cover node_modules/mocha/bin/_mocha test/*.js - - -R spec"
+    "cover": "istanbul cover node_modules/mocha/bin/_mocha test/*.js - - -R spec",
+    "publish:patch": "npm run clean && npm run build && npm run test && git add -A && git commit -m 'build' && npm version patch && git push && npm publish",
+    "publish:minor": "npm run clean && npm run build && npm run test && git add -A && git commit -m 'build' && npm version minor && git push && npm publish"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lesha-co/simple-totp.git"
   },
   "keywords": [
-    "totp"
+    "totp",
+    "base32"
   ],
   "author": "Aleksei Kuzmichev <lesha@lesha.co> (https://lesha.co/)",
   "license": "ISC",
@@ -31,6 +35,6 @@
     "coveralls": "^3.0.11",
     "istanbul": "^0.4.5",
     "mocha": "^7.1.1",
-    "typescript": "^3.8.3"
+    "typescript": "^4.7.4"
   }
 }

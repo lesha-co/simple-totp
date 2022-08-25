@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.u8a_to_base32 = void 0;
 const alphabet_1 = require("./alphabet");
-exports.encode = (buf) => {
+const u8a_to_base32 = (buf) => {
     let _buf = buf.slice();
     let current = 0;
     let currentBitLength = 0;
@@ -17,7 +18,7 @@ exports.encode = (buf) => {
         const leading5bits = current >> (currentBitLength - FLUSH);
         current -= leading5bits << (currentBitLength - FLUSH);
         currentBitLength -= FLUSH;
-        base32 += alphabet_1.alphabet[leading5bits];
+        base32 += alphabet_1.BASE32_ALPHABET[leading5bits];
     };
     const align = () => {
         current = current << (FLUSH - currentBitLength);
@@ -25,7 +26,7 @@ exports.encode = (buf) => {
     };
     const pad = () => {
         const length = Math.ceil(base32.length / 8) * 8;
-        base32 = base32.padEnd(length, alphabet_1.padding);
+        base32 = base32.padEnd(length, alphabet_1.BASE32_PADDING);
     };
     while (_buf.length) {
         while (currentBitLength < 5)
@@ -40,4 +41,5 @@ exports.encode = (buf) => {
     }
     return base32;
 };
-//# sourceMappingURL=encode.js.map
+exports.u8a_to_base32 = u8a_to_base32;
+//# sourceMappingURL=u8a_to_base32.js.map
