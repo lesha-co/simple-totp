@@ -34,7 +34,7 @@
     "chai": "^4.2.0",
     "coveralls": "^3.0.11",
     "istanbul": "^0.4.5",
-    "mocha": "^7.1.1",
+    "mocha": "^10.2.0",
     "typescript": "^4.7.4"
   }
 }
