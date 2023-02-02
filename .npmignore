@@ -1,0 +1,9 @@
+lib/
+coverage/
+.vscode/
+test/
+.npmignore
+.prettierignore
+*.tgz
+tsconfig.json
+.travis.yml
